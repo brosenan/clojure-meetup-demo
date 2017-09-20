@@ -3,8 +3,11 @@
             [perm.QmNYKXgUt64cvXau5aNFqvTrjyU8hEKdnhkvtcUphacJaf :as clg]))
 
 (perm/pure
+ (clg/defrule followee-tweets [user author text ts]
+   [:my-tweets/follow user author] (clg/by user)
+   [:my-tweets/tweet author text ts] (clg/by author))
+ 
  (clg/defclause tl-1
    [:my-tweets/timeline user -> author text ts]
-   [:my-tweets/follow user author] (clg/by user)
-   [:my-tweets/tweet author text ts] (clg/by author)))
+   [followee-tweets user author text ts]))
 
